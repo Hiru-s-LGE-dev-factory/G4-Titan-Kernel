@@ -212,6 +212,7 @@ struct sock_common {
     /* private: */
     int                     skc_dontcopy_end[0];
     /* public: */
+	atomic64_t		skc_cookie;
 };
 
 struct cg_proto;
@@ -327,6 +328,7 @@ struct sock {
         struct sk_buff    *head;
         struct sk_buff    *tail;
     } sk_backlog;
+#define sk_cookie		__sk_common.skc_cookie
 #define sk_rmem_alloc sk_backlog.rmem_alloc
     int            sk_forward_alloc;
 #ifdef CONFIG_RPS
