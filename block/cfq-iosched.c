@@ -693,7 +693,7 @@ static inline void cfqg_stats_update_dispatch(struct cfq_group *cfqg,
 }
 
 static inline void cfqg_stats_update_completion(struct cfq_group *cfqg,
-			u64 start_time, u64 io_start_time, int rw)
+			u64 start_time_ns, u64 io_start_time_ns, int rw)
 {
 	struct cfqg_stats *stats = &cfqg->stats;
 	u64 now = ktime_get_ns();
