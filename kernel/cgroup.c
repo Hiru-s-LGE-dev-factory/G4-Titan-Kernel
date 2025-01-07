@@ -2708,25 +2708,6 @@ static int cgroup_migrate(struct task_struct *leader, bool threadgroup,
 	return cgroup_taskset_migrate(&tset, root);
 }
 
-int subsys_cgroup_allow_attach(struct cgroup *cgrp, struct cgroup_taskset *tset)
-{
-	const struct cred *cred = current_cred(), *tcred;
-	struct task_struct *task;
-
-	if (capable(CAP_SYS_NICE))
-		return 0;
-
-	cgroup_taskset_for_each(task, cgrp, tset) {
-		tcred = __task_cred(task);
-
-		if (current != task && !uid_eq(cred->euid, tcred->uid) &&
-		    !uid_eq(cred->euid, tcred->suid))
-			return -EACCES;
-	}
-
-	return 0;
-}
-
 /**
  * cgroup_attach_task - attach a task or a whole threadgroup to a cgroup
  * @dst_cgrp: the cgroup to attach to
